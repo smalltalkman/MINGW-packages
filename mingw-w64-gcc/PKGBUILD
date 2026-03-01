@@ -51,7 +51,7 @@ else
   _sourcedir=${_realname}-${_version}-${_snapshot}
   _url=https://gcc.gnu.org/pub/gcc/snapshots/${_version}-${_snapshot}
 fi
-pkgrel=11
+pkgrel=12
 pkgdesc="GCC for the MinGW-w64"
 arch=('any')
 mingw_arch=('mingw32' 'mingw64' 'ucrt64')
@@ -243,6 +243,10 @@ build() {
 
   # so libgomp DLL gets built despide static libdl
   export lt_cv_deplibs_check_method='pass_all'
+
+  # This configure check fails with msvcrt due to
+  # https://github.com/mingw-w64/mingw-w64/issues/163
+  export gcc_cv_have_tls=yes
 
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=105507#c3
   # At least with mingw32 + dwarf-2 exceptions there can only be one libgcc in
